@@ -1,0 +1,724 @@
+<?php include '../../header.php' ;?>
+
+<div class="content-wrapper yung" >
+	<!-- หัวข้อ         -->
+	<section class="content-header">
+		<h1>
+			<i class="fa fa-industry"></i>&nbsp;&nbsp;WWT
+		</h1>
+	</section>
+	<!--ค้นหา  -->
+	<section class="content">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="box box-primary">
+					<div class="box-header with-border">
+						<h3 class="box-title">Criteria</h3>
+					</div>
+					<div class="box-body">
+						<form class="form-horizontal" id="myForm" commandname="sysParam"
+							method="post">
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="form-group">
+										<label for="paramType" class="col-lg-4 control-label">Company</label>
+										<div class="col-lg-6">
+											<select class="form-control" name="companyname"
+												id="companyname">
+												<option value="TPAC" selected>TPAC</option>
+												<option value="TPCC">TPCC</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="form-group">
+										<label for="paramCode" class="col-lg-4 control-label">WWT</label>
+										<div class="col-lg-6">
+												<select class="form-control" name="companyname"
+													id="companyname">
+													<option value="Temp" selected>Temp</option>
+													<option value="pH">pH</option>
+													<option value="SS">SS</option>
+													<option value="SS">TDS</option>
+													<option value="BOD">BOD</option>
+													<option value="COD">COD</option>
+													<option value="OG">OG</option>
+													<option value="TOC">TOC</option>
+												</select>
+											</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="form-group">
+										<label for="paramCode" class="col-lg-4 control-label">Year
+											From</label>
+										<div class="col-lg-6">
+											<div class='input-group date' id='datetimepicker6'>
+												<input type='text' class="form-control" value="2553" /> <span
+													class="input-group-addon"> <span
+													class="glyphicon glyphicon-calendar"></span>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-lg-6">
+									<div class="form-group">
+										<label for="paramCode" class="col-lg-4 control-label">Year To</label>
+										<div class="col-lg-6">
+											<div class='input-group date' id='datetimepicker7'>
+												<input type='text' class="form-control" value="2555" /> <span
+													class="input-group-addon"> <span
+													class="glyphicon glyphicon-calendar"></span>
+												</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="form-group ">
+										<div class="col-lg-12 text-center">
+											<button type="reset" class="btn btn-default">
+												&nbsp;Clear <i class="fa fa-refresh"></i>
+											</button>
+											&nbsp;&nbsp;
+											<button type="button" id="searchBtn" class="btn btn-primary"
+												onclick='clickSearch()'>
+												Search <i class="fa fa-search"></i>
+											</button>
+											&nbsp;&nbsp;
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--ผลลัพธ์  -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="box box-solid">
+					<div class="box-header with-border">
+						<h3 class="box-title">Result</h3>
+					</div>
+					<div class="box-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="box-tools pull-right">
+									<button type="button"
+										class="btn btn-box-tool btn-success btn-table"
+										data-toggle="modal" data-target="#myModal">
+										<i class="fa fa-plus"></i> Add
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<fieldset>
+									<legend>Concrete Pit (TPAC1)</legend>
+									<div class="table-responsive text-center">
+										<table class="table table-striped table-bordered ">
+											<thead>
+												<tr>
+													<th>ปี</th>
+													<th>มกราคม</th>
+													<th>กุมภาพันธ์</th>
+													<th>มีนาคม</th>
+													<th>เมษายน</th>
+													<th>พฤษภาคม</th>
+													<th>มิถุนายน</th>
+													<th>กรกฎาคม</th>
+													<th>สิงหาคม</th>
+													<th>กันยายน</th>
+													<th>ตุลาคม</th>
+													<th>พฤศจิกายน</th>
+													<th>ธันวาคม</th>
+													<th></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>2553</td>
+													<td>60</td>
+													<td>23</td>
+													<td>54</td>
+													<td>45</td>
+													<td>0</td>
+													<td>91</td>
+													<td>79.0</td>
+													<td>80</td>
+													<td>95</td>
+													<td>49</td>
+													<td>60</td>
+													<td>49</td>
+													<td>
+														<button type="button"
+															class="btn btn-box-tool btn-warning btn-table"
+															data-toggle="modal" data-target="#myModal">Edit</button>
+													</td>
+												</tr>
+												<tr>
+													<td>2554</td>
+													<td>60</td>
+													<td>23</td>
+													<td>54</td>
+													<td>45</td>
+													<td>0</td>
+													<td>91</td>
+													<td>79.0</td>
+													<td>80</td>
+													<td>95</td>
+													<td>49</td>
+													<td>60</td>
+													<td>49</td>
+													<td>
+														<button type="button"
+															class="btn btn-box-tool btn-warning btn-table"
+															data-toggle="modal" data-target="#myModal">Edit</button>
+													</td>
+												</tr>
+												<tr>
+													<td>2555</td>
+													<td>60</td>
+													<td>23</td>
+													<td>54</td>
+													<td>45</td>
+													<td>0</td>
+													<td>91</td>
+													<td>79.0</td>
+													<td>80</td>
+													<td>95</td>
+													<td>49</td>
+													<td>60</td>
+													<td>49</td>
+													<td>
+														<button type="button"
+															class="btn btn-box-tool btn-warning btn-table"
+															data-toggle="modal" data-target="#myModal">Edit</button>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</fieldset>
+
+								<fieldset>
+									<legend>Concrete Pit (TPAC2)</legend>
+									<div class="table-responsive text-center">
+										<table class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th>ปี</th>
+													<th>มกราคม</th>
+													<th>กุมภาพันธ์</th>
+													<th>มีนาคม</th>
+													<th>เมษายน</th>
+													<th>พฤษภาคม</th>
+													<th>มิถุนายน</th>
+													<th>กรกฎาคม</th>
+													<th>สิงหาคม</th>
+													<th>กันยายน</th>
+													<th>ตุลาคม</th>
+													<th>พฤศจิกายน</th>
+													<th>ธันวาคม</th>
+													<th></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>2553</td>
+													<td>60</td>
+													<td>23</td>
+													<td>54</td>
+													<td>45</td>
+													<td>0</td>
+													<td>91</td>
+													<td>79.0</td>
+													<td>80</td>
+													<td>95</td>
+													<td>49</td>
+													<td>60</td>
+													<td>49</td>
+													<td>
+														<button type="button"
+															class="btn btn-box-tool btn-warning btn-table"
+															data-toggle="modal" data-target="#myModal">Edit</button>
+													</td>
+												</tr>
+												<tr>
+													<td>2554</td>
+													<td>60</td>
+													<td>23</td>
+													<td>54</td>
+													<td>45</td>
+													<td>0</td>
+													<td>91</td>
+													<td>79.0</td>
+													<td>80</td>
+													<td>95</td>
+													<td>49</td>
+													<td>60</td>
+													<td>49</td>
+													<td>
+														<button type="button"
+															class="btn btn-box-tool btn-warning btn-table"
+															data-toggle="modal" data-target="#myModal">Edit</button>
+													</td>
+												</tr>
+												<tr>
+													<td>2555</td>
+													<td>60</td>
+													<td>23</td>
+													<td>54</td>
+													<td>45</td>
+													<td>0</td>
+													<td>91</td>
+													<td>79.0</td>
+													<td>80</td>
+													<td>95</td>
+													<td>49</td>
+													<td>60</td>
+													<td>49</td>
+													<td>
+														<button type="button"
+															class="btn btn-box-tool btn-warning btn-table"
+															data-toggle="modal" data-target="#myModal">Edit</button>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</fieldset>
+
+								<fieldset>
+									<legend>Concrete Pit (TPAC3)</legend>
+									<div class="table-responsive text-center">
+										<table class="table table-striped table-bordered">
+											<thead>
+												<tr>
+													<th>ปี</th>
+													<th>มกราคม</th>
+													<th>กุมภาพันธ์</th>
+													<th>มีนาคม</th>
+													<th>เมษายน</th>
+													<th>พฤษภาคม</th>
+													<th>มิถุนายน</th>
+													<th>กรกฎาคม</th>
+													<th>สิงหาคม</th>
+													<th>กันยายน</th>
+													<th>ตุลาคม</th>
+													<th>พฤศจิกายน</th>
+													<th>ธันวาคม</th>
+													<th></th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>2553</td>
+													<td>60</td>
+													<td>23</td>
+													<td>54</td>
+													<td>45</td>
+													<td>0</td>
+													<td>91</td>
+													<td>79.0</td>
+													<td>80</td>
+													<td>95</td>
+													<td>49</td>
+													<td>60</td>
+													<td>49</td>
+													<td>
+														<button type="button"
+															class="btn btn-box-tool btn-warning btn-table"
+															data-toggle="modal" data-target="#myModal">Edit</button>
+													</td>
+												</tr>
+												<tr>
+													<td>2554</td>
+													<td>60</td>
+													<td>23</td>
+													<td>54</td>
+													<td>45</td>
+													<td>0</td>
+													<td>91</td>
+													<td>79.0</td>
+													<td>80</td>
+													<td>95</td>
+													<td>49</td>
+													<td>60</td>
+													<td>49</td>
+													<td>
+														<button type="button"
+															class="btn btn-box-tool btn-warning btn-table"
+															data-toggle="modal" data-target="#myModal">Edit</button>
+													</td>
+												</tr>
+												<tr>
+													<td>2555</td>
+													<td>60</td>
+													<td>23</td>
+													<td>54</td>
+													<td>45</td>
+													<td>0</td>
+													<td>91</td>
+													<td>79.0</td>
+													<td>80</td>
+													<td>95</td>
+													<td>49</td>
+													<td>60</td>
+													<td>49</td>
+													<td>
+														<button type="button"
+															class="btn btn-box-tool btn-warning btn-table"
+															data-toggle="modal" data-target="#myModal">Edit</button>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</fieldset>
+
+
+							</div>
+						</div>
+
+						<!-- TAP -->
+						<!-- 						<div class="nav-tabs-custom"> -->
+						<!-- 							<ul class="nav nav-tabs" id="tab_tpac"> -->
+						<!-- 								<li class="active"><a href="#tab_1" data-toggle="tab">TSP</a></li> -->
+						<!-- 								<li><a href="#tab_2" data-toggle="tab">SOx</a></li> -->
+						<!-- 								<li><a href="#tab_3" data-toggle="tab">SOx 24(HR)</a></li> -->
+						<!-- 								<li><a href="#tab_4" data-toggle="tab">NOx</a></li> -->
+						<!-- 								<li><a href="#tab_5" data-toggle="tab">Formalin</a></li> -->
+						<!-- 							</ul> -->
+						<!-- 							<ul class="nav nav-tabs hidden" id="tab_tpcc"> -->
+						<!-- 								<li class="active"><a href="#tab_1" data-toggle="tab">CO</a></li> -->
+						<!-- 								<li><a href="#tab_1" data-toggle="tab">NOx</a></li> -->
+						<!-- 							</ul> -->
+						<!-- 							<div class="tab-content"> -->
+						<!-- 								<div class="tab-pane active" id="tab_1"> -->
+
+						<!-- 								</div> -->
+						<!-- 								<div class="tab-pane" id="tab_2">NO MORE DATA.</div> -->
+						<!-- 								<div class="tab-pane" id="tab_3">NO MORE DATA.</div> -->
+						<!-- 							</div> -->
+						<!-- 						</div> -->
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+	<div class="modal-dialog modal-lg">
+
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">WWT Temp</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal">
+
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label for="paramType" class="col-lg-4 control-label">Company</label>
+								<div class="col-lg-6">
+									<select class="form-control" name="Company" id="Company">
+										<option value="TPAC" selected>TPAC</option>
+										<option value="TPCC">TPCC</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label for="paramCode" class="col-lg-4 control-label">WWT</label>
+								<div class="col-lg-6">
+									<select class="form-control" name="WWT" id="WWT">
+										<option value="Temp" selected>Temp</option>
+										<option value="pH">pH</option>
+										<option value="SS">SS</option>
+										<option value="SS">TDS</option>
+										<option value="BOD">BOD</option>
+										<option value="COD">COD</option>
+										<option value="OG">OG</option>
+										<option value="TOC">TOC</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label for="paramCode" class="col-lg-4 control-label">Year </label>
+								<div class="col-lg-6">
+									<div class='input-group date' id='datetimepicker8'>
+										<input type='text' class="form-control" value="2553" /> <span
+											class="input-group-addon"> <span
+											class="glyphicon glyphicon-calendar"></span>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label for="paramCode" class="col-lg-4 control-label">Factory</label>
+								<div class="col-lg-6">
+									<select class="form-control" name="Factory" id="Factory">
+										<option value="TPAC_1" selected>TPAC 1</option>
+										<option value="TPAC_2">TPAC 2</option>
+										<option value="TPAC_3">TPAC 3</option>
+
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<fieldset>
+
+						<legend>Concrete Pit (TPAC1)</legend>
+
+						<div class="row">
+							<div class=col-md-6>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="M1">มกราคม</label>
+									<div class="col-md-6">
+										<input id="M1" name="M1" type="text" placeholder=""
+											class="form-control input-md">
+									</div>
+								</div>
+
+							</div>
+							<div class=col-md-6>
+
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="M7">กรกฎาคม</label>
+									<div class="col-md-6">
+										<input id="M7" name="M7" type="text" placeholder=""
+											class="form-control input-md">
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class=col-md-6>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="M2">กุมภาพันธ์</label>
+									<div class="col-md-6">
+										<input id="M2" name="M2" type="text" placeholder=""
+											class="form-control input-md">
+									</div>
+								</div>
+
+							</div>
+							<div class=col-md-6>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="M8">สิงหาคม</label>
+									<div class="col-md-6">
+										<input id="M8" name="M8" type="text" placeholder=""
+											class="form-control input-md">
+									</div>
+								</div>
+
+
+							</div>
+						</div>
+
+						<div class="row">
+							<div class=col-md-6>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="M3">มีนาคม</label>
+									<div class="col-md-6">
+										<input id="M3" name="M3" type="text" placeholder=""
+											class="form-control input-md">
+									</div>
+								</div>
+
+							</div>
+							<div class=col-md-6>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="M9">กันยายน</label>
+									<div class="col-md-6">
+										<input id="M9" name="M9" type="text" placeholder=""
+											class="form-control input-md">
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+						<div class="row">
+							<div class=col-md-6>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="M4">เมษายน.</label>
+									<div class="col-md-6">
+										<input id="M4" name="M4" type="text" placeholder=""
+											class="form-control input-md">
+									</div>
+								</div>
+
+							</div>
+							<div class=col-md-6>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="M10">ตุลาคม</label>
+									<div class="col-md-6">
+										<input id="M10" name="M10" type="text" placeholder=""
+											class="form-control input-md">
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+
+						<div class="row">
+							<div class=col-md-6>
+
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="M5">พฤษภาคม</label>
+									<div class="col-md-6">
+										<input id="M5" name="M5" type="text" placeholder=""
+											class="form-control input-md">
+									</div>
+								</div>
+							</div>
+							<div class=col-md-6>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="M11">พฤศจิกายน</label>
+									<div class="col-md-6">
+										<input id="M11" name="M11" type="text" placeholder=""
+											class="form-control input-md">
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+
+						<div class="row">
+							<div class=col-md-6>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="M6">มิถุนายน</label>
+									<div class="col-md-6">
+										<input id="M6" name="M6" type="text" placeholder=""
+											class="form-control input-md">
+									</div>
+								</div>
+
+							</div>
+							<div class=col-md-6>
+								<div class="form-group">
+									<label class="col-md-4 control-label" for="M12">ธันวาคม</label>
+									<div class="col-md-6">
+										<input id="M12" name="M12" type="text" placeholder=""
+											class="form-control input-md">
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</fieldset>
+				</form>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Save</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+
+<script type="text/javascript">
+$(function () {
+  $('input[name="daterange"]').daterangepicker({
+    opens: 'left',
+    locale: {
+          format: 'YYYY'
+      }
+  }, function (start, end, label) {
+    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+  });
+  $('input[name="monthinput"]').datepicker({
+  autoclose: true,
+  minViewMode: 1,
+  format: 'MM/yyyy'
+}).on('changeDate', function(selected){
+      // startDate = new Date(selected.date.valueOf());
+      // startDate.setDate(startDate.getDate(new Date(selected.date.valueOf())));
+      // $('.to').datepicker('setStartDate', startDate);
+  }); 
+});
+function clickSearch() {
+  
+  //document.getElementById("tabSarchResult").style.visibility = "visible"
+  var companyName = $('select[name=companyname]').val();
+  if (companyName=="TPAC"){
+    $( "#tab_tpcc" ).addClass( "hidden" );
+    $( "#tab_tpac" ).removeClass( "hidden" );
+
+  }else{
+    $( "#tab_tpac" ).addClass( "hidden" );
+    $( "#tab_tpcc" ).removeClass( "hidden" );
+  }
+};
+
+// $("#datepicker").datepicker({
+//     format: "yyyy",
+//     viewMode: "years", 
+//     minViewMode: "years"
+// });
+
+$('#datetimepicker6').datepicker({
+    format: "yyyy",
+    viewMode: "years", 
+    minViewMode: "years"
+});
+$('#datetimepicker7').datepicker({
+    useCurrent: false, //Important! See issue #1075
+    format: "yyyy",
+    viewMode: "years", 
+    minViewMode: "years"
+});
+$('#datetimepicker8').datepicker({
+    format: "yyyy",
+    viewMode: "years", 
+    minViewMode: "years"
+});
+$("#datetimepicker6").on("dp.change", function (e) {
+    $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+});
+$("#datetimepicker7").on("dp.change", function (e) {
+    $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+});
+
+
+</script>
+<?php include '../../footer.php' ;?>
