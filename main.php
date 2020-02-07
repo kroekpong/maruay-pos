@@ -707,6 +707,7 @@ if($_SESSION['user_info']['fn1']!="1")
 
 		//  console.log(data);
 		
+		
 		$.ajax({
 				data: data,
 				type: "post",
@@ -731,7 +732,12 @@ if($_SESSION['user_info']['fn1']!="1")
 					doSearch();
 					
 					if(print && sale_status == 'S'){
+						
+						data['inv_no'] = rdata['inv_no'];
+						
+						_PDATA = data;
 						openModalFinish(data);
+
 					}else{
 						var nalert = $(".alert-container") ;
 						nalert.slideDown();

@@ -61,7 +61,7 @@ if($_SESSION['user_info']['fn3']!="1")
 							</div>	
 
 
-							<div class="col-md-6">
+							<div class="col-md-8">
 
 								<a class="btn btn-app bg-blue" id="b-b1" >
 									<i class="fa fa-calendar"></i> สรุปรวมทุกบิลแยกวัน
@@ -75,9 +75,9 @@ if($_SESSION['user_info']['fn3']!="1")
 									<i class="fa fa-tasks"></i> สรุปแยกบิลแบบย่อย
 								</a>
 								
-								<!-- <a class="btn btn-app bg-navy" id="b-b4">
-									<i class="fa fa-line-chart"></i> สรุปยอดสินค้าขายดี
-								</a> -->
+								<a class="btn btn-app bg-navy  pull-right" id="b-b4">
+									<i class="fa fa-print"></i>  พิมพ์ใบกำกับภาษี
+								</a>
 
 							</div>
 						
@@ -487,6 +487,11 @@ if($_SESSION['user_info']['fn3']!="1")
 		$('#b2-table,#b1-table').hide();
 		buildTable("3");
 		doSearchSummary("3");
+	} );
+
+
+	$('#b-b4').click( function () {
+		location = 'invoice.php';
 	} );
 
 

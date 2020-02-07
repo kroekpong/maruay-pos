@@ -65,8 +65,16 @@
 			
 				<div class="modal-footer">
 					
-					<button type="button" class="btn btn-danger" data-dismiss="modal">
+					<button type="button" onclick="printInvoice()" class="btn btn-primary btn-lg" >
+					<i class="fa fa-print"></i>  พิมพ์ใบกำกับภาษี
+					</button>
+					
+
+					<button type="button" class="btn btn-danger  btn-lg" data-dismiss="modal">
 						<i class="fa fa-remove"></i>&nbsp; ปิดหน้าต่าง </button>
+
+
+
 				</div>
 				
         <!-- </div> -->
@@ -93,6 +101,10 @@
 		
 
 	} 
+
+	function printInvoice() {
+			location = 'invoice.php?inv='+_PDATA['inv_no'];
+	}
 	   
 
 </script>

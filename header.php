@@ -175,7 +175,7 @@
 							</span>
 							<? } else {?>
 							<span class="label label-danger"  id="printnok">
-								<i class="fa fa-exclamation"></i>< 
+								<i class="fa fa-exclamation"></i>
 							</span>
 							<?  } ?>
 							</a> 
