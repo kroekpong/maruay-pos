@@ -608,12 +608,11 @@ if($_SESSION['user_info']['fn1']!="1")
 	 var is
 	$(document).keydown(function(e) {
 			// e.preventDefault();
-			// console.log('keyCode: ', e.keyCode);
-			console.log('keyCode: ', e.keyCode);
+			// console.log('keyCode: ', e.keyCode); 
 
 
 		var is_modal = $('#editProductModal,#restProductModal,.sweet-alert').is(':visible');
-			console.log('is_modal: ', is_modal);
+			//console.log('is_modal: ', is_modal);
 		if(!is_modal){
 
 			// console.log('keyCode: ', e.keyCode);
@@ -874,6 +873,8 @@ if($_SESSION['user_info']['fn1']!="1")
 							return false
 						}
 
+						//document.getElementById('my-input').focus();
+ 
 						data['qty'] = getPriceTxt(inputValue);
 						doSearch();
 						swal.close();
@@ -910,7 +911,8 @@ if($_SESSION['user_info']['fn1']!="1")
 					});
 
 				}
-
+	 
+				$('.sweet-alert input').select();
 		}
 	} );
 	

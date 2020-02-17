@@ -45,7 +45,7 @@
 
 			$rows= array();
    			
-			$sql_cmd = "  SELECT d.*  ,  h.total_discount , h.total_amount
+			$sql_cmd = "  SELECT d.*  ,  h.total_discount , h.total_amount , (d.cost*d.qty )total_cost
 			FROM  tb_SaleHeader h  join tb_SaleDetail d
 			on h.saleHeader_ID = d.saleHeader_ID
 			where h.sale_status = 'S' " ;
@@ -69,7 +69,8 @@
 			$q_list = mysql_query($sql_cmd) or die("Could not query");
 			while($result=mysql_fetch_assoc($q_list)) {
 				$rows[]=$result;
-				$total_cost_itm += (float) $result['cost'];
+				// $total_cost_itm += (float) $result['cost'];
+				$total_cost_itm += (float) $result['total_cost'];
 				$total_amount_itm += (float) $result['amount'];
 				$total_discount_itm += (float) $result['discount'];
 			}
@@ -98,7 +99,7 @@
 
 			$rows= array();
    			
-			$sql_cmd = " SELECT  ROUND(SUM(d.cost),2) total_cost ,  
+			$sql_cmd = " SELECT  ROUND(SUM(d.cost*d.qty),2) total_cost ,  
 			ROUND(SUM(d.discount),2) total_discount_itm  , 
 		   (SELECT ROUND(SUM(i.total_discount),2) FROM tb_SaleHeader i 
 			 WHERE DATE_FORMAT(i.create_date, '%d/%m/%Y') = DATE_FORMAT(d.create_date, '%d/%m/%Y')  
@@ -158,7 +159,7 @@
    			
 			$sql_cmd = " SELECT
 				h.saleHeader_ID name,
-				ROUND(SUM(d.cost),2)    total_cost, 
+				ROUND(SUM(d.cost*d.qty),2)    total_cost, 
 				ROUND( h.total_discount + SUM(d.discount),2)  sum_discount, 
 				h.total_amount net_amount, 
 				DATE_FORMAT(d.create_date, '%d/%m/%Y')    create_date

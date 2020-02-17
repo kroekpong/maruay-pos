@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 
   include("service/config_service.php");
   
@@ -42,7 +42,12 @@
    }
 
   $printer =  "PDFCreator"; // กำหนดชื่อเครื่องพิมพ์
- 
+  $sql_cont = "  SELECT VALUE AS PRINT_NAME FROM tb_PosNum WHERE TYPE = 'PRINT_NAME' " ;
+  $q_cont = mysql_query($sql_cont) or die("Could not query");
+  while($result = mysql_fetch_array($q_cont)) {
+      $printer = $result['PRINT_NAME'];
+   }
+
 
   // ฟังก์ชั่นสำหรับ กำหนดค่าของ ตัวเลขที่สัมพันธ์กับ การพิมพ์
   // ตัวอย่างเช่น ขนาด 1 cm ในค่า px ที่ DPI ที่ 600 ก็จะเป็น dpimm2px(10);
@@ -69,7 +74,7 @@
     $font_dt_w = dpimm2px(1*1.2); 
 
     $r_start =  9;
-    $r_num =  42;
+    $r_num =  44;
     
       //  การตั้งค่าการพิมพ์
     printer_set_option($handle, PRINTER_COPIES, 1);
@@ -112,9 +117,9 @@
     // printer_draw_text($handle, $text, dpimm2px(10), dpimm2px(10));
 
 
-    $text = "ใบเสร็จรับชำระเงิน";
+    $text = "ใบเสร็จรับเงิน/ใบกำกับภาษีอย่างย่อ";
     $text = iconv("UTF-8","TIS-620",$text); 
-    printer_draw_text($handle, $text, dpimm2px(15), dpimm2px($r_start));  
+    printer_draw_text($handle, $text, dpimm2px(8.5), dpimm2px($r_start));  
 
     $r_start = $r_start+6;
     $text = $_REQUEST['inv'];
@@ -152,14 +157,14 @@
     for($i=1; $i<=count($rows); $i++){
         $y_pos = $y_start+(($i-1)*3.2);
 
-        $text = $rows[$i-1]['price'].'x'.$rows[$i-1]['qty'];
+        $text = $rows[$i-1]['qty'];
         $text = iconv("UTF-8","TIS-620",$text); 
         printer_draw_text($handle, $text, dpimm2px($m_left), dpimm2px($y_pos));       
        
         $text = $rows[$i-1]['product_Name'];
         $text = iconv("UTF-8","TIS-620",$text); 
         $string = substr($text, 0, 25);
-        printer_draw_text($handle, $string, dpimm2px(10), dpimm2px($y_pos));       
+        printer_draw_text($handle, $string, dpimm2px(8), dpimm2px($y_pos));       
 
 
         $text = $rows[$i-1]['amount_f'];
@@ -169,12 +174,15 @@
         printer_draw_text($handle, $text, dpimm2px($strno), dpimm2px($y_pos));      
         $y_end = $y_pos;        
     }
+
+
      
     $y_end+=2.8;
     $y_pos = $y_end;
     $text = "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
     $text = iconv("UTF-8","TIS-620",$text); 
     printer_draw_text($handle, $text, dpimm2px($m_left), dpimm2px($y_pos));  
+
 
     $y_end+=3;
     $y_pos = $y_end;
@@ -205,15 +213,22 @@
      
     $y_end+=3;
     $y_pos = $y_end;
-    $text = "รับเงิน/เงินทอน";
+    $text = "รับเงิน";
     $text = iconv("UTF-8","TIS-620",$text); 
     printer_draw_text($handle, $text, dpimm2px($m_left), dpimm2px($y_pos));       
 
     $text = $total_pay;
     $text = iconv("UTF-8","TIS-620",$text); 
     $strlen = strlen($text);
-    $strno = 35-$strlen ;
+    $strno = $r_num-$strlen ;
     printer_draw_text($handle, $text, dpimm2px($strno), dpimm2px($y_pos));      
+
+
+    $y_end+=3;
+    $y_pos = $y_end;
+    $text = "เงินทอน";
+    $text = iconv("UTF-8","TIS-620",$text); 
+    printer_draw_text($handle, $text, dpimm2px($m_left), dpimm2px($y_pos));   
 
     $text = $total_change;
     $text = iconv("UTF-8","TIS-620",$text); 
