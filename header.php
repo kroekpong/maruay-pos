@@ -170,7 +170,7 @@
 							<a href="#" >
 							<i class="fa fa-print"> </i> 
 							<? if($printer_status=="1") {?>
-							<span class="label label-success"  id="printok"  >
+							<span class="label label-success"  id="printok" title="<?echo $printer;?>" >
 								<i class="fa fa-check "></i>
 							</span>
 							<? } else {?>
@@ -309,6 +309,8 @@ function getInteger(str){
 }
 
 function getPriceTxt(text){
+// console.log("getPriceTxt : "+text);
+
 	if(isNaN(parseFloat(text))){
 		return 0;
 	}else{
@@ -317,6 +319,7 @@ function getPriceTxt(text){
 }
 
 function getPriceFormat(text){
+	// console.log("getPriceFormat : "+text);
 	if(isNaN(parseFloat(text))){
 		return 0.00;
 	}else{

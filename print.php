@@ -11,7 +11,7 @@
   $total_change = $_REQUEST['change'];
   $total_qty= 0;
    			
-  $sql_cmd = "  SELECT s.* ,TRUNCATE(s.amount,2) amount_f  , TRUNCATE(h.total_amount,2) total_amount , TRUNCATE(h.total_discount	,2)		total_discount	
+  $sql_cmd = "  SELECT s.* ,ROUND(s.amount,2) amount_f  , ROUND(h.total_amount,2) total_amount , ROUND(h.total_discount	,2)		total_discount	
   FROM tb_SaleHeader h 
   LEFT JOIN  tb_SaleDetail s 
   ON s.saleHeader_ID = h.saleHeader_ID
@@ -41,7 +41,7 @@
       $shopname = $result['POS_NAME'];
    }
 
-  $printer =  "PDFCreator"; // กำหนดชื่อเครื่องพิมพ์
+  $printer =  "PDFCreatorss"; // กำหนดชื่อเครื่องพิมพ์
  
 
   // ฟังก์ชั่นสำหรับ กำหนดค่าของ ตัวเลขที่สัมพันธ์กับ การพิมพ์
@@ -202,18 +202,25 @@
     $strlen = strlen($text);
     $strno = $r_num-$strlen ;
     printer_draw_text($handle, $text, dpimm2px($strno), dpimm2px($y_pos));          
-     
+    
     $y_end+=3;
     $y_pos = $y_end;
-    $text = "รับเงิน/เงินทอน";
+    $text = "รับเงิน";
     $text = iconv("UTF-8","TIS-620",$text); 
     printer_draw_text($handle, $text, dpimm2px($m_left), dpimm2px($y_pos));       
 
     $text = $total_pay;
     $text = iconv("UTF-8","TIS-620",$text); 
     $strlen = strlen($text);
-    $strno = 35-$strlen ;
+    $strno = $r_num-$strlen ;
     printer_draw_text($handle, $text, dpimm2px($strno), dpimm2px($y_pos));      
+
+
+    $y_end+=3;
+    $y_pos = $y_end;
+    $text = "เงินทอน";
+    $text = iconv("UTF-8","TIS-620",$text); 
+    printer_draw_text($handle, $text, dpimm2px($m_left), dpimm2px($y_pos));   
 
     $text = $total_change;
     $text = iconv("UTF-8","TIS-620",$text); 

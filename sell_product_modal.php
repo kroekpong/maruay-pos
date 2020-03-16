@@ -2,17 +2,17 @@
  
 
 <!-- Modal -->
-<div class="modal " tabindex="-1" role="dialog" id="editProductModal"   data-backdrop="static">
-   <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
+<div class="modal " tabindex="-1" role="dialog" id="editProductModal"  
+ data-backdrop="static" style="background: rgba(0, 0, 0, 0);" >
+   <div class="modal-dialog"   style="width: 70em;">
+        <div class="modal-content" style="background-color: #fff0;" >
+            <!-- <div class="modal-header" style="background-color: #fff;">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                  <h4 class="modal-title"><i class="fa fa-search"></i>  ค้นหาสินค้า</h4>
-           
                  
-			</div>
+			</div> -->
 			
-            <div class="modal-body">
+            <div class="modal-body" style=" background-color: #ffffffad; padding: 5px; ">
 				
 			
 				<div class="row">
@@ -31,10 +31,10 @@
                                 
 									<!-- ID -->	
 									<div class="input-group">
-											<input type="text" class="form-control input-lg input-p"
+											<input type="text" class="form-control  input-p"
 											id="search-product" placeholder="รหัสสินค้า, บาร์โค้ด ,ชื่อสินค้า " >
 											<span class="input-group-btn">
-												<button type="button" class="btn btn-info input-lg btn-lg" id="btn-product-add">
+												<button type="button" class="btn btn-info  " id="btn-product-add">
 													<i class="fa fa-search"></i> ค้นหาสินค้า [Enter]</button>
 											</span>
 										</div>
@@ -69,13 +69,13 @@
 			 </div>
 			</div>
 			
-				<div class="modal-footer">
+				<!-- <div class="modal-footer"> -->
 				
 					<!-- <button type="button" onclick="saveProduct()" class="btn btn-primary btn-lg" ><i class="fa fa-save"></i>&nbsp; Update</button> -->
 					
-					<button type="button" class="btn btn-warning btn-lg" data-dismiss="modal">
+					<!-- <button type="button" class="btn btn-warning" data-dismiss="modal">
 						<i class="fa fa-remove"></i>&nbsp; ปิดหน้าต่าง [ESC]</button>
-				</div>
+				</div> -->
 				
         </div>
         </div>
@@ -94,7 +94,7 @@
 
 
 		productTable = $('#product-table').DataTable({
-			scrollY:   '250px',
+			scrollY:   '200px',
 			//  scrollCollapse: true,
 			lengthChange:false,
 			searching:false,
@@ -130,7 +130,7 @@
 			ordering: false,
 			destroy: true,
 			rowCallback: function (row, data) {},
-			// info:     false,
+			info:     false,
 			language : DT_TH['language'] 
 		 });  
 
@@ -176,17 +176,17 @@
 	$('#product-table').on( 'dblclick', 'tr', function () {
 			var data = productTable.row( this ).data();
 			// console.log(data);
-			$.ajax({
-				url: "service/product_service.php?method=search",
-				data:{ name : $("#search-product").val()}
-			}).done(function (result) {
-				productTable.clear().draw();
-				// _data = result;
-				productTable.rows.add(result).draw();
-					_showLoading();
-			}).fail(function (jqXHR, textStatus, errorThrown) { 
-				_showLoading();
-			});
+			// $.ajax({
+			// 	url: "service/product_service.php?method=search",
+			// 	data:{ name : $("#search-product").val()}
+			// }).done(function (result) {
+			// 	productTable.clear().draw();
+			// 	// _data = result;
+			// 	productTable.rows.add(result).draw();
+			// 		_showLoading();
+			// }).fail(function (jqXHR, textStatus, errorThrown) { 
+			// 	_showLoading();
+			// });
 			
 
 			loadProduct(data['product_ID']);
@@ -194,6 +194,8 @@
 			doSearch();
 	});
    
+	
+
 </script>
 
 

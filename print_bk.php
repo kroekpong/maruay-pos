@@ -11,7 +11,7 @@
   $total_change = $_REQUEST['change'];
   $total_qty= 0;
    			
-  $sql_cmd = "  SELECT s.* ,TRUNCATE(s.amount,2) amount_f  , TRUNCATE(h.total_amount,2) total_amount , TRUNCATE(h.total_discount	,2)		total_discount	
+  $sql_cmd = "  SELECT s.* ,ROUND(s.amount,2) amount_f  , ROUND(h.total_amount,2) total_amount , ROUND(h.total_discount	,2)		total_discount	
   FROM tb_SaleHeader h 
   LEFT JOIN  tb_SaleDetail s 
   ON s.saleHeader_ID = h.saleHeader_ID

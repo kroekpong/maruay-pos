@@ -322,19 +322,13 @@ while($result=mysql_fetch_array($q_list)) {
 						
 				$.ajax({
 					type: 'POST',
-					data: $('#product-form').serialize(),
-					url: 'service/product_service.php?method=del_product',
+					data: data ,
+					url: 'service/product_service.php?method=del_product&user_id='+'<? echo $pos_user_id?>',
 					success: function(data) {
 
-						swal({
-
-							title: 'บันทึกรายการสินค้าสำเร็จ !',
-							type: 'success',
-							closeOnConfirm: false 
-						}, function () {
-							// $('#editProductModal').modal('hide')
+					 
 							doSearch();
-						}); 
+						 
 					}
 
 				});	
@@ -379,8 +373,8 @@ while($result=mysql_fetch_array($q_list)) {
 			// "bScrollCollapse": true,
 			// "sScrollXInner": "100%",
 			language : DT_TH['language'],
-			// searching:false,
 			pageLength:   50,
+			autoWidth : false,
 			processing: true,
         	// serverSide: true,
 			data:[],

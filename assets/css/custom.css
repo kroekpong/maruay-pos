@@ -176,6 +176,13 @@ html, body  {
     height: 40px;
 }
 
+ 
+   
+.input-lg:focus {
+	box-shadow: 0 0 8px rgba(81, 203, 238, 1);
+	border: 3px solid rgba(81, 203, 238, 1);
+  }
+
 #p-total-sum{
 	color:blue;
 	font-size: 38px;
@@ -267,7 +274,7 @@ dl {
 
 tbody .col-id{
 	text-align: center;
-    background-color: rgb(255, 204, 93);
+    background-color: rgba(243, 156, 18, 0.4);
 }
 
 tbody .col-qty{
@@ -310,12 +317,15 @@ tbody .col-sp-price{
 
  
 .table-striped>tbody>tr:nth-of-type(odd) {
-    background-color: rgb(211, 230, 254);
+    background-color: rgba(211, 230, 254, 0.7);
 }
-
+.table-striped>tbody>tr:nth-of-type(even) {
+    background-color: rgba(252, 251, 237, 0.618);
+}
 
 .table-striped>tbody>tr:hover {
 	background-color: rgb(255, 252, 179);
+	cursor: pointer;
 }
  
 tr.selected, tr.selected>td  {
@@ -501,3 +511,14 @@ div.dt-buttons {
 	color: rgb(255, 9, 185);
 	font-size: 45px;
 }
+
+ 
+@keyframes dbclick {
+	from {background-color: red;} 
+  }
+
+  .table-click{
+	animation-name: dbclick;
+	animation-duration: 0.5s;
+  }
+  

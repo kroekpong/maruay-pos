@@ -14,7 +14,7 @@
 
 			$rows= array();
    			
-			$sql_cmd = "  SELECT p.*, TRUNCATE(p.normal_price, 2) n_price,
+			$sql_cmd = "  SELECT p.*, ROUND(p.normal_price, 2) n_price,
 				l.location_name loc_name,
 				c.category_name cat_name,
 				u.unitType_name  unit_name
@@ -66,7 +66,7 @@
 			while($result=mysql_fetch_assoc($q_list)) {
 				$rows[]=$result;
 			}
-			echo json_encode($rows);
+			echo json_encode($rows, JSON_PRETTY_PRINT);
 
 		}else if("search_sell"==$_REQUEST['method']){
 		
@@ -77,17 +77,17 @@
 				$rows= array();
 				   
 				$sql_cmd = "  SELECT p.product_ID, p.product_Name , p.serial_no  , p.qty as old_qty , 1 as qty ,0 as discount ,
-				 TRUNCATE(p.normal_price, 2) total_price , u.unitType_name as unit_name ,TRUNCATE(p.cost, 2) cost  
-				  , qty_condition , wholesale_flg , TRUNCATE(p.wholesale_price, 2) wholesale_price , " ;
+				 ROUND(p.normal_price, 2) total_price , u.unitType_name as unit_name ,ROUND(p.cost, 2) cost  
+				  , qty_condition , wholesale_flg , ROUND(p.wholesale_price, 2) wholesale_price , " ;
 					
 			 
 				if(!empty( $_REQUEST['ptype']) &&  $_REQUEST['ptype'] == 'P2'){
-					$sql_cmd .= " TRUNCATE(p.special_price_2, 2) sell_price ";  
+					$sql_cmd .= " ROUND(p.special_price_2, 2) sell_price ";  
 				} 
 				else if(!empty( $_REQUEST['ptype']) &&  $_REQUEST['ptype'] == 'P1'){
-					$sql_cmd .= " TRUNCATE(p.special_price_1, 2) sell_price "; 
+					$sql_cmd .= " ROUND(p.special_price_1, 2) sell_price "; 
 				}else {
-					$sql_cmd .= " TRUNCATE(p.normal_price, 2) sell_price "; 
+					$sql_cmd .= " ROUND(p.normal_price, 2) sell_price "; 
 				} 
 
 				$sql_cmd .= " FROM tb_ProductMaster p  
@@ -109,7 +109,7 @@
 					$rows[]=$result;
 				}
 				// echo isset( $_REQUEST['name']);
-				echo json_encode($rows);
+				echo json_encode($rows, JSON_PRETTY_PRINT);
 			
 		} else if("return_count"==$_REQUEST['method']){
 			$user_id=$_REQUEST['user_id'];
@@ -135,10 +135,10 @@
 
 		} else if("search_rest_list"==$_REQUEST['method']){
 			$saleHeader_ID=$_REQUEST['saleHeader_ID'];
-			$sql_rest = " SELECT a.* ,  a.price as sell_price , a.amount as total_price 
-			  , p.qty_condition , p.wholesale_flg , TRUNCATE(p.wholesale_price, 2) wholesale_price 
+			$sql_rest = " SELECT @i:=@i+1 AS sorder, a.* ,  a.price as sell_price , a.amount as total_price 
+			  , p.qty_condition , p.wholesale_flg , ROUND(p.wholesale_price, 2) wholesale_price 
 			FROM tb_SaleDetail  a    left join  tb_ProductMaster p
-			ON p.product_ID = a.product_ID
+			ON p.product_ID = a.product_ID JOIN  (SELECT @i:=0) AS r 
 			WHERE a.saleHeader_ID= '".$saleHeader_ID."' " ;
 			$q_list_rest = mysql_query($sql_rest) or die("Could not query");
 			$rows= array();
@@ -180,9 +180,9 @@
 			$product_ID=$_REQUEST['product_ID'];
 			$user_id=$_REQUEST['user_id'];
 
-			// $strSQL = " delete from tb_ProductMaster  WHERE product_ID= '".$product_ID."' " ;
-			$strSQL = " 	update   tb_ProductMaster  set product_status = 'Inactive'  WHERE product_ID= '".$product_ID."' " ;
-			$strSQL = mysql_query($strSQL);
+			$strSQL = " delete from tb_ProductMaster  WHERE product_ID= '".$product_ID."' " ;
+			//$strSQL = " 	update   tb_ProductMaster  set product_status = 'Inactive'  WHERE product_ID= '".$product_ID."' " ;
+			$objQuery = mysql_query($strSQL);
 
 			if($objQuery){
 				$arr = array('status' => 'success');  
