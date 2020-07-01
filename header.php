@@ -12,7 +12,6 @@
 
 ?>
 
-<?php include 'checkprint.php' ;?>
 
 <!DOCTYPE html>
 <html>
@@ -100,7 +99,6 @@
 <!-- 				</span> -->
 			</a>
 			
-			
 			<!-- Header Navbar: style can be found in header.less -->
 			<nav class="navbar navbar-static-top">
 				<!-- Sidebar toggle button-->
@@ -166,11 +164,21 @@
 				
 					<ul class="nav navbar-nav">
 
+
+						<li class="dropdown notifications-menu ">
+							<a href="#" title="Client Monitor" id="clientok" >
+								<i class="fa fa-tv"></i>
+								<span class="label label-danger" id="clientok-lb">
+									<i class="fa fa-power-off"></i>
+								</span>
+							</a> 
+						</li>
+
 						<li class="dropdown notifications-menu">
-							<a href="#" >
+							<a href="#" title="<?echo $printer;?>" >
 							<i class="fa fa-print"> </i> 
 							<? if($printer_status=="1") {?>
-							<span class="label label-success"  id="printok" title="<?echo $printer;?>" >
+							<span class="label label-success"  id="printok" >
 								<i class="fa fa-check "></i>
 							</span>
 							<? } else {?>
@@ -194,14 +202,6 @@
 							</ul>
 						</li>
 						<!-- ********** -->
-
-						<li class="dropdown notifications-menu hidden">
-							<a href="#" >
-							<i class="fa fa-bell-o"></i>
-							<span class="label label-warning">10</span>
-							</a> 
-						</li>
-					
 
 						<li class="dropdown user user-menu">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -294,7 +294,7 @@
 				}
 		} };
 	
-		moment.locale('th') 
+		moment.locale('th') ;
 
 	</script>
 
@@ -333,6 +333,73 @@ function getPriceFormat(text){
 		num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		return num_parts.join(".");
 	}
+
+
+
+     var popupWindow = null;
+	function popup(url, width, height) {
+	
+		// var left = (screen.width - width) / 2;
+		// var top = 20 ;
+		var params = 'width=' + width + ', height=' + height;
+		// params += ', top=' + top + ', left=' + left;
+		// params += ',top=0, left=0' ;
+		// params += ', directories=no';
+		// params += ', location=no';
+		// params += ', menubar=no';
+		// // params += ', resizable=no';
+		// params += ', fullscreen=yes';
+		// params += ', scrollbars=no';
+		// params += ', status=no';
+		// params += ', toolbar=no';
+
+		// params  = 'width='+screen.width;
+		// params += ', height='+screen.height;
+		params += ', top=0, left=0';
+		// params += ', fullscreen=yes';
+		params += ', directories=no';
+		params += ', location=no';
+		params += ', menubar=no';
+		params += ', resizable=no';
+		params += ', scrollbars=no';
+		params += ', status=no';
+		params += ', toolbar=no';
+
+
+
+		if(popupWindow && !popupWindow.closed) {
+			popupWindow.focus(); //If already Open Set focus
+		} else {
+			popupWindow = window.open(url, '',params);
+			popupWindow.focus();
+
+		}
+
+		
+		// console.log("OPEN");
+		// return false;
+	}
+
+	 $('#clientok').click( function () {
+		localStorage['CLIENT_ACTIVE'] = 1;
+		refreshParent();
+		popup('clientview.php',1060,600);
+	});
+
+
+ 	setInterval(refreshParent, 1000);
+
+	function refreshParent() {
+		// console.log('CHK > '+localStorage['CLIENT_ACTIVE']);
+		if(localStorage['CLIENT_ACTIVE'] == 1){
+			$('#clientok-lb').removeClass("label-danger").addClass("label-success");
+		}else{
+			$('#clientok-lb').removeClass("label-success").addClass("label-danger");
+		}
+		localStorage['CLIENT_ACTIVE'] = 0;
+		// window.opener.location.reload();
+	}
+
 
 </script>
 		

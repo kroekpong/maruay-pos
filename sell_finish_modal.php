@@ -70,7 +70,7 @@
 					</button>
 					
 
-					<button type="button" class="btn btn-danger  btn-lg" data-dismiss="modal">
+					<button type="button" class="btn btn-danger  btn-lg" data-dismiss="modal" >
 						<i class="fa fa-remove"></i>&nbsp; ปิดหน้าต่าง </button>
 
 
@@ -98,14 +98,17 @@
 		$("#fn-total").val(data['total_amount']); 
 		$("#fn-change").val(data['change']); 
 
-		
-
 	} 
 
 	function printInvoice() {
 			location = 'invoice.php?inv='+_PDATA['inv_no'];
 	}
 	   
+
+	$('#finishModal').on('hidden.bs.modal', function () {
+			doSearch();
+	});
+
 
 </script>
 

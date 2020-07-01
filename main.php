@@ -373,7 +373,7 @@ if($_SESSION['user_info']['fn1']!="1")
 					,"fnCreatedCell" : function(nTd, sData, oData, iRow, iCol) {
 						var txt =  oData['sell_price'];
 						if(oData['wholesale_flg'] == "1" && getPriceTxt(oData['qty']) >= getPriceTxt(oData['qty_condition']) ){
-							txt = "<span class='col-sp-price'>" + oData['wholesale_price'] + "</span>"
+							txt = "<span class='col-sp-price'>" + oData['wholesale_price'] + "</span>";
 						}
 						$(nTd).html(txt);
 					}
@@ -444,6 +444,9 @@ if($_SESSION['user_info']['fn1']!="1")
 			var price =  getPriceTxt(data['sell_price']) ;
 			if(data['wholesale_flg'] == "1" &&   getPriceTxt(data['qty']) >=  getPriceTxt(data['qty_condition']) ){
 				price  = getPriceTxt(data['wholesale_price']) ;
+				data['final_price'] = data['wholesale_price'];
+			}else{
+				data['final_price'] = data['sell_price'];
 			}
 
 			data['total_price'] = (getPriceTxt(data['qty']) * price) - getPriceTxt(data['discount']);
@@ -463,12 +466,30 @@ if($_SESSION['user_info']['fn1']!="1")
 			total_change = (pay - total_sum);
 		}
 
-		
 
-		$('#p-total').val(nformat(total_price.toFixed(2)));
-		$('#p-total-dis').val(nformat(total_dis.toFixed(2)));
-		$('#p-total-sum').val(nformat(total_sum.toFixed(2)));
-		$('#p-change').val(nformat(total_change.toFixed(2)));
+		total_price = nformat(total_price.toFixed(2));
+		total_dis = nformat(total_dis.toFixed(2));
+		total_sum = nformat(total_sum.toFixed(2));
+		total_change = nformat(total_change.toFixed(2));
+		total_pay = nformat(pay.toFixed(2));
+
+		var CAL_PRICE = {
+			'total_price' : total_price,
+			'total_dis' : total_dis,
+			'total_sum' : total_sum,
+			'total_change' : total_change,
+			'total_pay' : total_pay
+		}
+
+		$('#p-total').val(total_price);
+		$('#p-total-dis').val(total_dis);
+		$('#p-total-sum').val(total_sum);
+		$('#p-change').val(total_change);
+
+		var is_fin = $('#finishModal').is(':visible');
+		if(!is_fin){
+			localStorage.setItem("CAL_PRICE",JSON.stringify(CAL_PRICE));
+		}
 
 	}
 	
@@ -523,20 +544,22 @@ if($_SESSION['user_info']['fn1']!="1")
 		});
 
 
-
-
 	}
 
 
 
 	function doSearch(){
 		
-		loadReturnList();
+		loadReturnCount();
 		
 		var so = 1;
 		dataList.forEach(dt => {
 			dt['sorder'] = so++;
 		});
+
+		// if(sell_type && sell_type!= ""){
+		// 	$("#p-type").val(sell_type);
+		// }
 
 		calPrice();
 
@@ -561,6 +584,7 @@ if($_SESSION['user_info']['fn1']!="1")
 			$('#cal-form')[0].reset(); 
 		}
 		
+		saveStorage();
 		
 	};
 
@@ -725,6 +749,22 @@ if($_SESSION['user_info']['fn1']!="1")
 
 
 
+
+	function saveStorage() {
+		// console.log("****** SET *****");
+		var is_fin = $('#finishModal').is(':visible');
+		if(!is_fin){
+			localStorage.setItem("SELL_ITEM",JSON.stringify(dataList));
+		}
+		// console.log(dataList);
+	}
+
+	function clearStorage() {
+		// console.log("****** CLEAR Storage *****");
+		localStorage.setItem("SELL_ITEM",[]);
+		localStorage.setItem("CAL_PRICE", {});
+	}
+
 	function saveSubmit(sale_status, sale_type, print){
 		var data = {
 			saleType :	sale_type,
@@ -735,12 +775,14 @@ if($_SESSION['user_info']['fn1']!="1")
 			user_id : '<? echo $pos_user_id?>',
 			pay : getPriceFormat($("#p-pay").val()),
 			change : $('#p-change').val(),
+			pos_id : '<? echo $pos_id?>',
 			items: JSON.stringify(dataList)  
 		 }
 
 		//  console.log(data);
 		
-		
+		// return;
+
 		$.ajax({
 				data: data,
 				type: "post",
@@ -760,9 +802,10 @@ if($_SESSION['user_info']['fn1']!="1")
 
 					dataList = [] ;
 
+
 					swal.close();
 
-					doSearch();
+			
 					
 					if(print && sale_status == 'S'){
 						
@@ -778,6 +821,8 @@ if($_SESSION['user_info']['fn1']!="1")
 							nalert.slideUp();
 						}, 2000);
 					}
+
+					doSearch();
 
 					// $("#search").focus();
 
@@ -1010,7 +1055,7 @@ if($_SESSION['user_info']['fn1']!="1")
 	} );
 	
 	
-    function loadReturnList(){
+    function loadReturnCount(){
 		var data = {
 			user_id : '<? echo $pos_user_id?>',
 		 }
@@ -1088,12 +1133,20 @@ if($_SESSION['user_info']['fn1']!="1")
 			$("#search").focus().val('');
 		})
 		
+		clearStorage();
 		 
 	});
 
 //   window.addEventListener('load', function() {
 //         window.parent.postMessage(document.body.clientWidth + ";" + document.body.clientHeight);
 //     }, false);
+
+	// function openClientScreen(){
+	// 	popup('EditDialog.aspx',500,375);
+	// }
+
+  
+	
 
 
 </script>

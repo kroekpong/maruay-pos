@@ -134,16 +134,28 @@
 			echo json_encode($rows);
 
 		} else if("search_rest_list"==$_REQUEST['method']){
+
 			$saleHeader_ID=$_REQUEST['saleHeader_ID'];
-			$sql_rest = " SELECT @i:=@i+1 AS sorder, a.* ,  a.price as sell_price , a.amount as total_price 
+			$sql_rest = " SELECT @i:=@i+1 AS sorder, a.*, h.saleType_ID , 
+			-- ROUND(a.price, 2) as sell_price , 
+
+				IF(h.saleType_ID='P2', ROUND(p.special_price_2, 2)  ,  
+					IF(h.saleType_ID='P1', ROUND(p.special_price_1, 2)  ,ROUND(p.normal_price, 2)  )
+				) as sell_price , 
+
+			 ROUND(a.amount, 2) as total_price 
 			  , p.qty_condition , p.wholesale_flg , ROUND(p.wholesale_price, 2) wholesale_price 
 			FROM tb_SaleDetail  a    left join  tb_ProductMaster p
-			ON p.product_ID = a.product_ID JOIN  (SELECT @i:=0) AS r 
+			ON p.product_ID = a.product_ID 
+			left join  tb_SaleHeader  h on h.saleHeader_ID=a.saleHeader_ID
+			JOIN  (SELECT @i:=0) AS r 
 			WHERE a.saleHeader_ID= '".$saleHeader_ID."' " ;
 			$q_list_rest = mysql_query($sql_rest) or die("Could not query");
 			$rows= array();
+			$saleType ="P0";
 			while($result=mysql_fetch_assoc($q_list_rest)) {
 				$rows[]=$result;
+				$saleType = $result['saleType_ID'];
 			}
 
 				/*  Delete Temp */
@@ -153,7 +165,9 @@
 			$strSQL2 = "DELETE FROM tb_SaleDetail  WHERE   saleHeader_ID= '".$saleHeader_ID."' " ;
 			$objQuery2 = mysql_query($strSQL2);
 
-			echo json_encode($rows);
+			// $arr = array('dataList' => $rows); 
+			$arr = array('saleType' => $saleType, 'dataList' => $rows); 
+			echo json_encode($arr, JSON_PRETTY_PRINT);
 
 		} else if("search_sell_list"==$_REQUEST['method']){
 

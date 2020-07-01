@@ -134,8 +134,11 @@
 				data:{ saleHeader_ID : _tmpId}
 			}).done(function (result) {
 
-				// console.log(result);
-				dataList = result ;
+				dataList = result['dataList'] ;
+
+				$("#p-type").val(result['saleType']);
+
+
 			 	doSearch();
 
 				 $("#restProductModal").modal('hide'); 

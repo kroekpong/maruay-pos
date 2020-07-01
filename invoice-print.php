@@ -16,7 +16,7 @@
 	<!-- Bootstrap 3.3.7 -->
 	<link rel="stylesheet" href="<?php echo $uri ; ?>assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
 	<!-- Font Awesome -->
-	<link rel="stylesheet" href="<?php echo $uri ; ?>assets/bower_components/font-awesome/css/font-awesome.min.css">
+	<!-- <link rel="stylesheet" href="<?php echo $uri ; ?>assets/bower_components/font-awesome/css/font-awesome.min.css"> -->
 
 	<link rel="stylesheet" href="<?php echo $uri ; ?>assets/css/AdminLTE.min.css">
 
@@ -31,6 +31,7 @@
 thead {
     color: white;
     background-color: #777 !important;
+    -webkit-print-color-adjust: exact; 
 }
 
 .center{
@@ -86,6 +87,7 @@ thead {
     font-size: 12px; 
     /* border: none; */
     border: 1px solid #ddd;
+    
 }
 
 .pr-5 {
@@ -97,7 +99,7 @@ thead {
 }
 
 .t-item>thead>tr>td , .t-item>tbody>tr>td{ 
-    border: none;   
+    /* border: none;    */
     border-right: 1px solid #ddd;
     border-left: 1px solid #ddd;
   }
@@ -106,6 +108,20 @@ thead {
   text-align: right;
 } */
  
+@media print {
+  .wrapper{            
+    display: block;
+    width: auto;
+    height: auto;
+    overflow: visible;  
+  }
+ 
+
+}
+ 
+
+   table { page-break-inside:auto }
+   tr    { page-break-inside:avoid; page-break-after:auto }
 
 </style>
   
@@ -132,17 +148,12 @@ thead {
  $u_mail = $_REQUEST['u_mail'];
 
 
-
-
  $create_date =  "";
-
-
 
 
  $rows= array();
 
   $saleHeader_ID=$inv_no;
-  // $saleHeader_ID='INV-201912180116';
 
 
   $sql_rest = " SELECT a.* ,   ROUND(a.price,2) as sell_price , a.amount as total_price ,
@@ -160,7 +171,6 @@ thead {
   while($result=mysql_fetch_assoc($q_list_rest)) {
     $rows[]=$result;
 
-    // echo json_encode($result);
 
     $u_create = $result['employee_name'].' '.$result['employee_surname'];
     $create_date = $result['create_date'];
@@ -173,7 +183,7 @@ thead {
 
 
 
-<body onload="window.print(); ">
+<body onload="window.print();">
 <!-- <body  > -->
 <div class="wrapper">
   <!-- Main content -->
@@ -397,10 +407,10 @@ thead {
     </div>
 
 
-<hr>
+<!-- <hr> -->
 
   <div class="row center">
-
+  <hr> 
       <div class="col-xs-3 ">
 ผู้รับสินค้า<br>
 <br>   ____________________<br>
@@ -434,6 +444,9 @@ thead {
   </section>
   <!-- /.content -->
 </div>
+
+<div style="page-break-after: always"></div>
+
 <!-- ./wrapper -->
 </body>
 </html>

@@ -1,6 +1,6 @@
 ﻿<?php
 
-  include("service/config_service.php");
+  include("constant.php");
   
 
   $rows= array();
@@ -34,16 +34,6 @@
   }
     
 
-  $shopname = "KHOTDEE 168";
-  $sql_cont = "  SELECT VALUE AS POS_NAME FROM tb_PosNum WHERE TYPE = 'POS_NAME' " ;
-  $q_cont = mysql_query($sql_cont) or die("Could not query");
-  while($result = mysql_fetch_array($q_cont)) {
-      $shopname = $result['POS_NAME'];
-   }
-
-  $printer =  "PDFCreatorss"; // กำหนดชื่อเครื่องพิมพ์
- 
-
   // ฟังก์ชั่นสำหรับ กำหนดค่าของ ตัวเลขที่สัมพันธ์กับ การพิมพ์
   // ตัวอย่างเช่น ขนาด 1 cm ในค่า px ที่ DPI ที่ 600 ก็จะเป็น dpimm2px(10);
   // หรือ ขนาด 1 cm ในค่า px ที่ DPI 300 ก็จะเป็น dpimm2px(10,300); 
@@ -62,14 +52,19 @@
     $m_left = 0;
     $m_top = 0;
 
-    $font_hd_h = dpimm2px(7.1); 
-    $font_hd_w = dpimm2px(2.8); 
+    $font_hd_h = dpimm2px(7); 
+    $font_hd_w = dpimm2px(2.6); 
     
     $font_dt_h = dpimm2px(3.3*1.2); 
     $font_dt_w = dpimm2px(1*1.2); 
 
     $r_start =  9;
     $r_num =  42;
+
+    $print_encode = "UTF-8";
+    $print_font_encode  = "TH Sarabun New";
+    $print_font = "TIS-620";
+
     
       //  การตั้งค่าการพิมพ์
     printer_set_option($handle, PRINTER_COPIES, 1);
@@ -95,52 +90,47 @@
     //----------------------------------------------
  
     // ส่วนของการพิมพ์ข้อความ รองรับภาษาไทย
-    $font = printer_create_font("TH Sarabun New",  $font_hd_h,   $font_hd_w , PRINTER_FW_BOLD, false, false, false, 0);
+    $font = printer_create_font( $print_font_encode,  $font_hd_h,   $font_hd_w , PRINTER_FW_BOLD, false, false, false, 0);
     printer_select_font($handle, $font);
 
-    $text = iconv("UTF-8","TIS-620",$shopname);
-    printer_draw_text($handle, $text, dpimm2px($m_left+4), dpimm2px($m_top));
+    $text = iconv($print_encode,$print_font, $pos_name);
+    printer_draw_text($handle, $text, dpimm2px($m_left+6), dpimm2px($m_top));
     printer_delete_font($font);
 
-
-    $font = printer_create_font("TH Sarabun New", $font_dt_h , $font_dt_w, PRINTER_FW_NORMAL, false, false, false, 0);
+    
+    $font = printer_create_font( $print_font_encode, $font_dt_h , $font_dt_w, PRINTER_FW_NORMAL, false, false, false, 0);
     printer_select_font($handle, $font);
-
-
-    // $text = "TAX 0000000000000 (VAT Included)";
-    // $text = iconv("UTF-8","TIS-620",$text); 
-    // printer_draw_text($handle, $text, dpimm2px(10), dpimm2px(10));
 
 
     $text = "ใบเสร็จรับชำระเงิน";
-    $text = iconv("UTF-8","TIS-620",$text); 
-    printer_draw_text($handle, $text, dpimm2px(15), dpimm2px($r_start));  
+    $text = iconv($print_encode,$print_font,$text); 
+    printer_draw_text($handle, $text, dpimm2px(14), dpimm2px($r_start));  
 
     $r_start = $r_start+6;
     $text = $_REQUEST['inv'];
-    $text = iconv("UTF-8","TIS-620",$text); 
+    $text = iconv($print_encode,$print_font,$text); 
     printer_draw_text($handle, $text, dpimm2px($m_left), dpimm2px($r_start));  
 
     $text = date("H:i:s d/m/Y");
-    $text = iconv("UTF-8","TIS-620",$text); 
+    $text = iconv($print_encode,$print_font,$text); 
     printer_draw_text($handle, $text, dpimm2px(25), dpimm2px($r_start));  
 
     $r_start = $r_start+2.8;
     $text = "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
-    $text = iconv("UTF-8","TIS-620",$text); 
+    $text = iconv($print_encode,$print_font,$text); 
     printer_draw_text($handle, $text, dpimm2px($m_left), dpimm2px($r_start));  
      
     $r_start = $r_start+2.8;
     $text = "จำนวน";
-    $text = iconv("UTF-8","TIS-620",$text); 
+    $text = iconv($print_encode,$print_font,$text); 
     printer_draw_text($handle, $text, dpimm2px($m_left), dpimm2px($r_start));    
 
     $text = "รายการ";
-    $text = iconv("UTF-8","TIS-620",$text); 
+    $text = iconv($print_encode,$print_font,$text); 
     printer_draw_text($handle, $text, dpimm2px(12), dpimm2px($r_start));    
 
     $text = "จำนวนเงิน";
-    $text = iconv("UTF-8","TIS-620",$text); 
+    $text = iconv($print_encode,$print_font,$text); 
     $strlen = strlen($text);
     $strno = $r_num-$strlen ;
     printer_draw_text($handle, $text, dpimm2px( $strno), dpimm2px($r_start));       
@@ -151,39 +141,43 @@
     // for ($i = 0; $i < count($pas_arr); $i++)  {   
     for($i=1; $i<=count($rows); $i++){
         $y_pos = $y_start+(($i-1)*3.2);
-
-        $text = $rows[$i-1]['price'].'x'.$rows[$i-1]['qty'];
-        $text = iconv("UTF-8","TIS-620",$text); 
+        $tprice = number_format($rows[$i-1]['price']);
+        // $tprice = $rows[$i-1]['price'];
+        $text = $tprice.'x'.$rows[$i-1]['qty'];
+        $text = iconv($print_encode,$print_font,$text); 
+        //  $text = ;
         printer_draw_text($handle, $text, dpimm2px($m_left), dpimm2px($y_pos));       
        
         $text = $rows[$i-1]['product_Name'];
-        $text = iconv("UTF-8","TIS-620",$text); 
+        $text = iconv($print_encode,$print_font,$text); 
         $string = substr($text, 0, 25);
         printer_draw_text($handle, $string, dpimm2px(10), dpimm2px($y_pos));       
 
 
         $text = $rows[$i-1]['amount_f'];
-        $text = iconv("UTF-8","TIS-620", $text); 
+        $text = iconv($print_encode,$print_font, $text); 
+        $text = number_format($text, 2);
         $strlen = strlen($text);
         $strno = $r_num-$strlen ;
-        printer_draw_text($handle, $text, dpimm2px($strno), dpimm2px($y_pos));      
+        printer_draw_text($handle,$text, dpimm2px($strno), dpimm2px($y_pos));      
         $y_end = $y_pos;        
     }
      
     $y_end+=2.8;
     $y_pos = $y_end;
     $text = "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
-    $text = iconv("UTF-8","TIS-620",$text); 
+    $text = iconv($print_encode,$print_font,$text); 
     printer_draw_text($handle, $text, dpimm2px($m_left), dpimm2px($y_pos));  
 
     $y_end+=3;
     $y_pos = $y_end;
     $text = "ส่วนลด";
-    $text = iconv("UTF-8","TIS-620",$text); 
+    $text = iconv($print_encode,$print_font,$text); 
     printer_draw_text($handle, $text, dpimm2px($m_left), dpimm2px($y_pos));
     
     $text = $total_discount;
-    $text = iconv("UTF-8","TIS-620",$text); 
+    $text = iconv($print_encode,$print_font,$text); 
+    $text = number_format($text, 2);
     $strlen = strlen($text);
     $strno = $r_num-$strlen ;
     printer_draw_text($handle, $text, dpimm2px($strno), dpimm2px($y_pos));      
@@ -191,14 +185,15 @@
     $y_end+=3;
     $y_pos = $y_end;
     $text = "ยอดสุทธิ ";
-    $text = iconv("UTF-8","TIS-620",$text); 
+    $text = iconv($print_encode,$print_font,$text); 
     printer_draw_text($handle, $text, dpimm2px($m_left), dpimm2px($y_pos));       
 
     $text = " ".$total_qty."  ชิ้น ";
-    $text = iconv("UTF-8","TIS-620",$text); 
+    $text = iconv($print_encode,$print_font,$text); 
     printer_draw_text($handle, $text, dpimm2px(15), dpimm2px($y_pos));      
     $text = $total_amount;
-    $text = iconv("UTF-8","TIS-620",$text); 
+    $text = iconv($print_encode,$print_font,$text); 
+    $text = number_format($text, 2);
     $strlen = strlen($text);
     $strno = $r_num-$strlen ;
     printer_draw_text($handle, $text, dpimm2px($strno), dpimm2px($y_pos));          
@@ -206,11 +201,12 @@
     $y_end+=3;
     $y_pos = $y_end;
     $text = "รับเงิน";
-    $text = iconv("UTF-8","TIS-620",$text); 
+    $text = iconv($print_encode,$print_font,$text); 
     printer_draw_text($handle, $text, dpimm2px($m_left), dpimm2px($y_pos));       
 
     $text = $total_pay;
-    $text = iconv("UTF-8","TIS-620",$text); 
+    $text = iconv($print_encode,$print_font,$text); 
+    $text = number_format($text, 2);
     $strlen = strlen($text);
     $strno = $r_num-$strlen ;
     printer_draw_text($handle, $text, dpimm2px($strno), dpimm2px($y_pos));      
@@ -219,11 +215,12 @@
     $y_end+=3;
     $y_pos = $y_end;
     $text = "เงินทอน";
-    $text = iconv("UTF-8","TIS-620",$text); 
+    $text = iconv($print_encode,$print_font,$text); 
     printer_draw_text($handle, $text, dpimm2px($m_left), dpimm2px($y_pos));   
 
     $text = $total_change;
-    $text = iconv("UTF-8","TIS-620",$text); 
+    $text = iconv($print_encode,$print_font,$text); 
+    $text = number_format($text, 2);
     $strlen = strlen($text);
     $strno = $r_num-$strlen ;
     printer_draw_text($handle, $text, dpimm2px($strno), dpimm2px($y_pos));      
@@ -231,35 +228,35 @@
     // $y_end+=4;
     // $y_pos = $y_end;
     // $text = "R0000000000";
-    // $text = iconv("UTF-8","TIS-620",$text); 
+    // $text = iconv($print_encode,$print_font,$text); 
     // printer_draw_text($handle, $text, dpimm2px(3), dpimm2px($y_pos));       
     // $text = date("H:i:s d/m/Y");
-    // $text = iconv("UTF-8","TIS-620",$text); 
+    // $text = iconv($print_encode,$print_font,$text); 
     // printer_draw_text($handle, $text, dpimm2px(30), dpimm2px($y_pos));                  
      
 
     $y_end+=5;
     $y_pos = $y_end;
     $text = "*** โปรดเก็บไว้เป็นหลักฐาน ***";
-    $text = iconv("UTF-8","TIS-620",$text); 
+    $text = iconv($print_encode,$print_font,$text); 
     printer_draw_text($handle, $text, dpimm2px($m_left+10), dpimm2px($y_pos));              
  
     $y_end+=4;
     $y_pos = $y_end;
     $text = "โทร 0933262848 ";
-    $text = iconv("UTF-8","TIS-620",$text); 
+    $text = iconv($print_encode,$print_font,$text); 
     printer_draw_text($handle, $text, dpimm2px($m_left+14), dpimm2px($y_pos));              
  
     $y_end+=4;
     $y_pos = $y_end;
     $text = "ขอบคุณที่ใช้บริการ ";
-    $text = iconv("UTF-8","TIS-620",$text); 
+    $text = iconv($print_encode,$print_font,$text); 
     printer_draw_text($handle, $text, dpimm2px($m_left+14), dpimm2px($y_pos));              
  
     // $y_end = $y_end+4;
     // $y_pos = $y_end;    
     // $text = "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
-    // $text = iconv("UTF-8","TIS-620",$text); 
+    // $text = iconv($print_encode,$print_font,$text); 
     // printer_draw_text($handle, $text, dpimm2px(3), dpimm2px($y_pos));       
          
     /////////Cash Drawer/////////

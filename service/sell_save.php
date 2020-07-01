@@ -17,6 +17,7 @@
 			$pay=$_REQUEST['pay'];
 			$change=$_REQUEST['change'];
 			$user_id=$_REQUEST['user_id'];
+			$pos_id=$_REQUEST['pos_id'];
 
 			$total_amount = str_replace(",","",$total_amount);
 			$total_discount = str_replace(",","",$total_discount);
@@ -26,9 +27,9 @@
 
 			$query_insert = "  insert into  `tb_SaleHeader`( saleHeader_ID ,`saleType_ID`,`total_discount`,`total_amount`,
 			`customer_ID`,`employee_ID`,`order_date`,`sale_status`,`create_date`,
-			`create_by` ,`pay`,`change` ) values ( fn_getNumber('".$saleType."')
+			`create_by` ,`pay`,`change` , pos_id ) values ( fn_getNumber('".$saleType."')
 			,'".$priceType."' ,'".$total_discount."','".$total_amount."' ,NULL,'".$user_id."' 
-			,NOW(),'".$sale_status."',NOW(), '".$user_id."' ,'".$pay."', '".$change."' ) ";
+			,NOW(),'".$sale_status."',NOW(), '".$user_id."' ,'".$pay."', '".$change."' , '".$pos_id."' ) ";
 
 			$objQuery = mysql_query($query_insert) or die(mysql_error());
 
@@ -44,7 +45,7 @@
 						 '".$item['product_ID']."' 
 						,'".$item['product_Name']."'
 						,'".$item['unit_name']."' ,'".$item['cost']."'  ,'".$item['old_qty']."' 
-					,'".$item['qty']."' ,'".$item['sell_price']."' ,'".$item['discount']."' ,'".$item['total_price']."'
+					,'".$item['qty']."' ,'".$item['final_price']."' ,'".$item['discount']."' ,'".$item['total_price']."'
 					, NOW(), '".$user_id."' ) ";
 
 					$objQuery_detail = mysql_query($query_detail) or die(mysql_error());

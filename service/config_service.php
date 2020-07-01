@@ -2,7 +2,8 @@
 $SETTINGS["hostname"] = 'localhost';
 $SETTINGS["mysql_user"] = 'root';
 $SETTINGS["mysql_pass"] = 'root';
-$SETTINGS["mysql_database"] = 'pos_system';
+$SETTINGS["mysql_database"] = 'maruay_pos';
+// $SETTINGS["mysql_database"] = 'maruay_pos';
 
 // $SETTINGS["hostname"] = 'localhost';
 // $SETTINGS["mysql_user"] = 'khotdeec_root';

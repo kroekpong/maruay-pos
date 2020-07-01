@@ -450,6 +450,8 @@ $inv_no = $_REQUEST['inv'];
 			return false;
 		}
 
+		$("#u_inv").val('INV-'+name);
+
  		$.ajax({
 			type: 'POST',
 			async : false,
@@ -595,7 +597,6 @@ $inv_no = $_REQUEST['inv'];
 
 	$('#b-refresh').click( function () {
 			location = 'invoice.php';
-
 	});
 	
 	function saveSubmitReturn(){
@@ -667,7 +668,6 @@ $inv_no = $_REQUEST['inv'];
 		if(inv_no != ""){
 			inv_no  = inv_no.replace('INV-','');
 			$("#search").val(inv_no);
-			$("#u_inv").val('INV-'+inv_no);
 			loadProduct(inv_no);
 		}
 
